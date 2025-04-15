@@ -8,19 +8,18 @@ export default function Formulario_Optimo() {
     const form = e.currentTarget;
     const formData = new FormData(form);
 
-    // Enviamos los datos con URLSearchParams
-    await fetch("http://localhost:4000/form", {
+    const res = await fetch("http://localhost:4000/form", {
       method: "POST",
       body: new URLSearchParams(formData as any),
     });
 
-    const formJson = Object.fromEntries(formData.entries());
-    console.log(formJson); // Lo ves bien en consola del navegador
+    const data = await res.json();
+    setMensaje(data.mensaje); // Muestra lo que dice el servidor
   };
 
   return (
     <div className="pagina">
-      <h1>Formulario conectado</h1>
+      <h1>Formulario conectado ✅</h1>
 
       <form method="post" onSubmit={handleSubmit} className="formulario">
         <h2>Formulario de contacto</h2>
@@ -43,11 +42,10 @@ export default function Formulario_Optimo() {
           required
         />
 
-        <div className="botones">
-          <button type="reset">Reset</button>
-          <button type="submit">Enviar</button>
-        </div>
+        <button type="submit">Enviar</button>
       </form>
+
+      {mensaje && <p style={{ marginTop: "1rem" }}>{mensaje}</p>}
     </div>
   );
 }
