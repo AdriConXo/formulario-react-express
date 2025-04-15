@@ -14,6 +14,7 @@ export default function Formulario_Optimo() {
     });
 
     const data = await res.json();
+    console.log("✅ Respuesta del servidor:", data);
     setMensaje(data.mensaje); // Muestra lo que dice el servidor
   };
 
